@@ -93,24 +93,18 @@ try
 				
 				}
 				
-				
-				
-				
 			}
 			else
 			{
 				throw new Exception($connection->error);
 			}
-		
 			
-			
-		
-		
+			$connection->close();
 		
 	}
 	
 	
-	$connection->close();
+	
 	
 }
 

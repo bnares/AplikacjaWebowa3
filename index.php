@@ -40,7 +40,7 @@
 			if(isset($_SESSION['e_logowanie']))
 			{
 				echo '<br/>'.$_SESSION['e_logowanie'];
-				//echo $_SESSION['test'];
+			
 				
 			}
 		

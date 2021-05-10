@@ -56,7 +56,6 @@ try
 				if(isset($_SESSION['e_logowanie']))
 				{
 					unset($_SESSION['e_logowanie']);
-					//unset($_SESSION['test']);
 				}
 				
 				$_SESSION['id'] = $rekord['id'];
@@ -77,7 +76,7 @@ try
 		else
 		{
 			$_SESSION['e_logowanie'] = '<span style ="color:red">Nieprawidłowy Login lub Haslo</span>';
-			//$_SESSION['test']= "<br/>LICZBA WYNIKOW: ".$liczbaWynikow.' nick: '.$nick.' Haslo: '.$password.' Dlugosc niku: '.strlen($nick).' Dlugosc hasla '.strlen($password);
+			
 			header('Location:index.php');
 		}
 		

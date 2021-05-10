@@ -31,20 +31,20 @@ try
 		if(!$wynikZapytania)
 		{
 			throw new Exception ($connection->error);
-			//exit();
+			
 		}
 		$listaIdKategoriiWydatkuUzytkownika = $wynikZapytania->fetch_assoc();
 		
 		//wartosc expense_category_assigned_to_user_id z db
 		$expense_category_assigned_to_user_id = $listaIdKategoriiWydatkuUzytkownika['id'];
-		//$zapytanieSql->free_result();
+		
 		
 		$zapytanieSql = "SELECT * FROM payment_methods_asigned_to_users WHERE name = '$metodaPlatnosci' AND user_id = '$user_id';";
 		$wynikZapytania = $connection->query($zapytanieSql);
 		if(!$wynikZapytania)
 		{
 			throw new Exception ($connection ->error);
-			//exit();
+			
 		}
 		$listaIdMetodPlatnosciUzytkownika = $wynikZapytania->fetch_assoc();
 		$payment_method_assigned_to_user_id = $listaIdMetodPlatnosciUzytkownika['id'];
@@ -57,8 +57,7 @@ try
 		
 		if($connection->query("INSERT INTO expenses VALUES (NULL, '$user_id', '$expense_category_assigned_to_user_id', '$payment_method_assigned_to_user_id', '$kwota', '$data', '$komentarz');"))
 		{
-			//$_SESSION['kategoriaWydatku'] = $_POST['kategoria'];
-			//$_SESSION['metodaPlatnosci'] = $_POST['metodaPlatnosci'];
+			
 			header('Location: loggedin.php');
 		}
 		else
@@ -66,11 +65,11 @@ try
 			throw new Exception ($connection->error);
 			print_r($_SESSION['infoDeweloperskie']);
 		}
-		
+		$connection->close();
 		
 	}
 	
-	$connection->close();
+	
 	
 }
 
@@ -87,26 +86,3 @@ catch (Exception $e)
 
 
 
-<!DOCTYPE HTML>
-<html lang = "pl">
-	
-	<head>
-	
-		<meta charset = "utf-8"/>
-		<meta http-equiv = "X-UA-Compatible" content = "IE=edge,chrome =1"/>
-		<title>MyBudget</title>
-		
-		
-	</head>
-	
-	
-	<body>
-	
-	
-	
-	
-	
-	
-	</body>
-	
-</html>

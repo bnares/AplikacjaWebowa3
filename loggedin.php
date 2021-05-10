@@ -4,15 +4,6 @@ session_start();
 echo "Witaj ".$_SESSION['login']." jestes zalogowany";
 
 
-
-//echo '<br/><a href = "index1.php">Wyloguj</a>';
-//echo '<form action = "dodajPrzychod.php" method = "post">';
-//echo '<input type = "submit" value = "Dodaj Przychód"/>';
-//echo '</form>';
-
-
-
-
 ?>
 
 

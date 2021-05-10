@@ -22,8 +22,8 @@ try
 		{
 			if($zapytanieSqlAsignedTable)
 			{
-				$tabelaWynikiDefault = array();
-				$tabelaWynikiAsigned = array();
+				//$tabelaWynikiDefault = array();
+				//$tabelaWynikiAsigned = array();
 				while($wynikZapytaniaSqlDefault = mysqli_fetch_array($zapytanieSqlDefaultTable))
 				{
 					//kontrola wartosci alert()
@@ -37,7 +37,7 @@ try
 						}
 						
 					}
-					// przesuwa wskaznik na poczatek listy po wykonaniu zagniezdzonego while gdyz domysle wskaznik jest na ostatnim wierszu bazy danych
+					// przesuwa wskaznik na poczatek listy po wykonaniu zagniezdzonego while gdyz po petli wskaznik pozsotaje na ostatnim wierszu bazy danych
 					mysqli_data_seek($zapytanieSqlAsignedTable,0);  
 					if($count==0)
 					{	
@@ -100,9 +100,9 @@ try
 		{
 			throw new Exception ($connection ->error);
 		}
-		
+		$connection->close();
 	}
-	$connection->close();
+	
 }
 catch (Exception $e)
 {
@@ -131,8 +131,6 @@ catch (Exception $e)
 			<br/>
 			Kategoria: 
 			<?php
-			
-				
 				
 				mysqli_report(MYSQLI_REPORT_STRICT);
 				

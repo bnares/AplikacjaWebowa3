@@ -17,7 +17,7 @@
 	<body>
 	
 	
-		<?php
+<?php
 
 session_start();
 require_once "connect.php";
@@ -44,8 +44,7 @@ try
 		
 		else
 		{
-			//$rekordyTablicowePrzychody = $wynikPrzychody->fetch_assoc();
-			//$rekordyTablicoweWydatki = $wynikWydatki->fetch_assoc();
+			
 			$sumaPrzychody = 0;
 			$sumaWydatki = 0;
 			echo '<div>';
@@ -56,14 +55,10 @@ try
 			
 			echo '<th>Przychody</th>';
 			
-			
-			
-			//echo '<th>Data</th>'
+		
 			
 			echo '</tr>';
 			
-			
-				//echo '<tr>';
 				
 				while($wynik = mysqli_fetch_assoc($wynikPrzychody))
 				{
@@ -112,11 +107,6 @@ try
 				
 				echo '<br><div style = "clear:both"><b>BILANS<b>: '.$sumaPrzychody-$sumaWydatki.'</div>';
 				
-				
-				//echo '</tr>';
-			
-			
-			
 		}
 	}
 }
