@@ -46,13 +46,17 @@ try
 		{
 			//$rekordyTablicowePrzychody = $wynikPrzychody->fetch_assoc();
 			//$rekordyTablicoweWydatki = $wynikWydatki->fetch_assoc();
+			$sumaPrzychody = 0;
+			$sumaWydatki = 0;
+			echo '<div>';
+			echo '<div style ="float:left">';
 			echo '<table>';
 			
 			echo '<tr>';
 			
 			echo '<th>Przychody</th>';
 			
-			echo '<th>Wydatki</th>';
+			
 			
 			//echo '<th>Data</th>'
 			
@@ -60,40 +64,59 @@ try
 			
 			
 				//echo '<tr>';
-				$count =0;
+				
 				while($wynik = mysqli_fetch_assoc($wynikPrzychody))
 				{
-					if($count==1)
-					{
-						echo '<tr>';
-						$count=0;
-					}
 					
-					echo '<script type = "text/javascript">alert("PRZYCHÓD '.$wynik['amount'].'")</script>';
+					echo '<tr>';
+					
+					//echo '<script type = "text/javascript">alert("PRZYCHÓD '.$wynik['amount'].'")</script>';
 					echo '<td>'.$wynik['amount'].'</td>';
-					$count++;
+					$sumaPrzychody = $sumaPrzychody+$wynik['amount'];
+					
+					echo '</tr>';
+				
 				}
 				mysqli_data_seek($wynikPrzychody,0);
 				
+				echo '</table>';
+				
+				echo '</div>';
+				
+				echo '<div style = "float: left">';
+				
+				echo '<table>';
+				
+				echo '<tr>';
+			
+				echo '<th>Wydatki</th>';
+			
+				echo '</tr>';
+				
 				while($wynik=mysqli_fetch_assoc($wynikWydatki))
 				{
-					echo '<script type = "text/javascript">alert("ROZCHÓD '.$wynik['amount'].'")</script>';
+					echo '<tr>';
+					//echo '<script type = "text/javascript">alert("ROZCHÓD '.$wynik['amount'].'")</script>';
 					echo '<td>'.$wynik['amount'].'</td>';
-					$count++;
-					if($count==1)
-					{
-						echo '</tr>';
-						$count=0;
-					}
+					$sumaWydatki = $sumaWydatki+$wynik['amount'];
+					echo '</tr>';
 					
 				}
 				mysqli_data_seek($wynikWydatki,0);
+				
+				echo '</table>';
+				
+				echo '</div>';
+				echo '</div>';
+				
+				
+				echo '<br><div style = "clear:both"><b>BILANS<b>: '.$sumaPrzychody-$sumaWydatki.'</div>';
 				
 				
 				//echo '</tr>';
 			
 			
-			echo '</table>';
+			
 		}
 	}
 }
