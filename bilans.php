@@ -44,8 +44,8 @@ try
 		
 		else
 		{
-			$rekordyTablicowePrzychody = $wynikPrzychody->fetch_assoc();
-			$rekordyTablicoweWydatki = $wynikWydatki->fetch_assoc();
+			//$rekordyTablicowePrzychody = $wynikPrzychody->fetch_assoc();
+			//$rekordyTablicoweWydatki = $wynikWydatki->fetch_assoc();
 			echo '<table>';
 			
 			echo '<tr>';
@@ -59,25 +59,38 @@ try
 			echo '</tr>';
 			
 			
-				echo '<tr>';
-				for($i =0;$i<$wynikPrzychody->num_rows; $i++)
+				//echo '<tr>';
+				$count =0;
+				while($wynik = mysqli_fetch_assoc($wynikPrzychody))
 				{
-					echo '<script type = "text/javascript">alert("PRZYCHÓD '.$rekordyTablicowePrzychody['amount'].'")</script>';
-					echo '<td>'.$rekordyTablicowePrzychody['amount'].'</td>';
+					if($count==1)
+					{
+						echo '<tr>';
+						$count=0;
+					}
 					
+					echo '<script type = "text/javascript">alert("PRZYCHÓD '.$wynik['amount'].'")</script>';
+					echo '<td>'.$wynik['amount'].'</td>';
+					$count++;
+				}
+				mysqli_data_seek($wynikPrzychody,0);
+				
+				while($wynik=mysqli_fetch_assoc($wynikWydatki))
+				{
+					echo '<script type = "text/javascript">alert("ROZCHÓD '.$wynik['amount'].'")</script>';
+					echo '<td>'.$wynik['amount'].'</td>';
+					$count++;
+					if($count==1)
+					{
+						echo '</tr>';
+						$count=0;
+					}
 					
 				}
-				
-				for($i =0;$i<$wynikWydatki->num_rows; $i++)
-				{
-					echo '<script type = "text/javascript">alert("ROZCHÓD '.$rekordyTablicoweWydatki['amount'].'")</script>';
-					echo '<td>'.$rekordyTablicoweWydatki['amount'].'</td>';
-					
-					
-				}
+				mysqli_data_seek($wynikWydatki,0);
 				
 				
-				echo '</tr>';
+				//echo '</tr>';
 			
 			
 			echo '</table>';

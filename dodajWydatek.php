@@ -3,6 +3,9 @@
 session_start();
 require_once "connect.php";
 mysqli_report(MYSQLI_REPORT_STRICT);
+
+
+
 try
 {
 	$connection = new mysqli($host, $user, $password, $db_name);
@@ -129,8 +132,8 @@ catch (Exception $e)
 			Kategoria: 
 			<?php
 			
-				echo '<select name = "kategoria">';
-				session_start();
+				
+				
 				mysqli_report(MYSQLI_REPORT_STRICT);
 				
 				try
@@ -147,14 +150,17 @@ catch (Exception $e)
 						{
 							throw new Exception ($connection->error);
 						}
+						echo '<select name = "kategoria">';
 						echo '<option value = "default" disabled selected>--WYBIERZ--</option>';
 						while($wynikZapytaniaSql = mysqli_fetch_array($rekordyZapytaniaSql))
 						{
-							echo '<option value = '.$wynikZapytaniaSql['name'].'>'.strtoupper($wynikZapytaniaSql['name']).'</option>';
+							echo '<option value = '.'"'.$wynikZapytaniaSql["name"].'"'.'>'.strtoupper($wynikZapytaniaSql["name"]).'</option>';
 						}
+						echo '</select>';
+						$connection->close();
 					}
 					
-					$connection->close();
+					
 				}
 				
 				catch (Exception $e)
@@ -162,7 +168,7 @@ catch (Exception $e)
 					echo '<br>Error: '.$e;
 				}
 				
-				echo '</select>';
+				
 		
 			?>
 			<br/>
@@ -170,14 +176,14 @@ catch (Exception $e)
 			
 			
 				<?php
-					echo '<select name = "metodaPlatnosci">';
-					session_start();
+					
+					
 					require_once "connect.php";
 					mysqli_report(MYSQLI_REPORT_STRICT);
 					try
 					{
 						$connection = new mysqli($host, $user, $password, $db_name);
-						if($connect->connect_errno!=0)
+						if($connection->connect_errno!=0)
 						{
 							throw new Exception ($connection->error);
 						}
@@ -188,12 +194,14 @@ catch (Exception $e)
 							$sqlWynikZapytania = $connection->query($sqlZapytanie);
 							if($sqlWynikZapytania)
 							{
+								echo '<select name = "metodaPlatnosci">';
 								echo '<option value = "default" disabled selected>--WYBIERZ--</option>';
 								while($listaWynikow = mysqli_fetch_assoc($sqlWynikZapytania))
 								{		
 									
-									echo "<option value = ".$listaWynikow['name'].">".strtoupper($listaWynikow['name'])."</option>";
+									echo '<option value ='.'"'.$listaWynikow["name"].'"'.'>'.strtoupper($listaWynikow["name"]).'</option>';
 								}
+								echo "</select>";
 								
 							}
 							else
@@ -207,7 +215,7 @@ catch (Exception $e)
 					{
 						echo "<br>Error: ".$e;
 					}
-					echo "</select>";
+					
 				?>
 			
 			

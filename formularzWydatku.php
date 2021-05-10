@@ -16,11 +16,14 @@ try
 	else
 	{
 		$user_id = $_SESSION['id'];
-		$kategoria = rawurldecode($_POST['kategoria']);
+		$kategoria = $_POST['kategoria'];
 		$kwota = $_POST['kwota'];
 		$data = $_POST['data'];
 		$komentarz = $_POST['kom'];
-		$metodaPlatnosci = rawurldecode($_POST['metodaPlatnosci']);
+		$metodaPlatnosci = $_POST['metodaPlatnosci'];
+		
+		$_SESSION['kategoriaWydatku'] = $_POST['kategoria'];
+		$_SESSION['metodaPlatnosci'] = $_POST['metodaPlatnosci'];
 		
 		//znajdz id kategorii po jej nazwie i id uzytkownika
 		$zapytanieSql = "SELECT * FROM expenses_category_asigned_to_users WHERE name = '$kategoria' AND user_id = '$user_id';";
@@ -35,6 +38,7 @@ try
 		//wartosc expense_category_assigned_to_user_id z db
 		$expense_category_assigned_to_user_id = $listaIdKategoriiWydatkuUzytkownika['id'];
 		//$zapytanieSql->free_result();
+		
 		$zapytanieSql = "SELECT * FROM payment_methods_asigned_to_users WHERE name = '$metodaPlatnosci' AND user_id = '$user_id';";
 		$wynikZapytania = $connection->query($zapytanieSql);
 		if(!$wynikZapytania)
@@ -44,18 +48,23 @@ try
 		}
 		$listaIdMetodPlatnosciUzytkownika = $wynikZapytania->fetch_assoc();
 		$payment_method_assigned_to_user_id = $listaIdMetodPlatnosciUzytkownika['id'];
+		$_SESSION['infoDeweloperskie'] = '<span>'.$metodaPlatnosci.' metoda platnosci payment_method_assigned_to_user_id '.$payment_method_assigned_to_user_id.' </span>';
 		if(is_null($payment_method_assigned_to_user_id))
 		{
-			throw new Exception ('BRAK WYNIKOW W BAZIE expense_category_assigned_to_user_id '.$expense_category_assigned_to_user_id.' kategoria '.$kategoria.' payment_method_assigned_to_user_id '.$payment_method_assigned_to_user_id.' metodaPlatnosci'.$metodaPlatnosci);
+			throw new Exception ('expense_category_assigned_to_user_id '.$expense_category_assigned_to_user_id.' kategoria '.$kategoria.' payment_method_assigned_to_user_id '.$payment_method_assigned_to_user_id.' metodaPlatnosci'.$metodaPlatnosci);
+			print_r($_SESSION['infoDeweloperskie']);
 		}
 		
 		if($connection->query("INSERT INTO expenses VALUES (NULL, '$user_id', '$expense_category_assigned_to_user_id', '$payment_method_assigned_to_user_id', '$kwota', '$data', '$komentarz');"))
 		{
+			//$_SESSION['kategoriaWydatku'] = $_POST['kategoria'];
+			//$_SESSION['metodaPlatnosci'] = $_POST['metodaPlatnosci'];
 			header('Location: loggedin.php');
 		}
 		else
 		{
 			throw new Exception ($connection->error);
+			print_r($_SESSION['infoDeweloperskie']);
 		}
 		
 		
@@ -68,6 +77,8 @@ try
 catch (Exception $e)
 {
 	echo "<br/>Twoj error to: ".$e;
+	echo "<br><br>";
+	print_r($_SESSION['infoDeweloperskie']);
 }
 
 ?>
